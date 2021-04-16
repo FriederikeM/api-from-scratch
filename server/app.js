@@ -17,7 +17,28 @@ app.post("/students", (req, res) => {
 });
 
 app.get("/students", (req, res) => {
-  res.json({});
+  Students.find().then((students) => {
+    res.status(200);
+    res.json(students);
+  });
+});
+
+app.patch("/students/:id", (req, res) => {
+  const { id } = req.params;
+  Students.findByIdAndUpdate(id, req.body, { new: true }).then(
+    (updatedStudent) => {
+      res.status(200);
+      res.json(updatedStudent);
+    }
+  );
+});
+
+app.delete("/students/:id", (req, res) => {
+  const { id } = req.params;
+  Students.findByIdAndDelete(id).then(() => {
+    res.status(204);
+    res.json("Post deleted!");
+  });
 });
 
 mongoose.connect("mongodb://localhost/bootcamp", {

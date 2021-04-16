@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const Student = require("./models/student");
+const Students = require("./models/students");
 const Course = require("./models/course");
 
 const app = express();
@@ -9,10 +9,15 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.json({
-    "/courses": "nothing yet",
+app.post("/students", (req, res) => {
+  Students.create(req.body).then((newStudent) => {
+    res.status(201);
+    res.json(newStudent);
   });
+});
+
+app.get("/students", (req, res) => {
+  res.json({});
 });
 
 mongoose.connect("mongodb://localhost/bootcamp", {

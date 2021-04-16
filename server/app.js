@@ -23,6 +23,14 @@ app.get("/students", (req, res) => {
   });
 });
 
+app.get("/students/:id", (req, res) => {
+  const { id } = req.params;
+  Students.findById(id).then((students) => {
+    res.status(200);
+    res.json(students);
+  });
+});
+
 app.patch("/students/:id", (req, res) => {
   const { id } = req.params;
   Students.findByIdAndUpdate(id, req.body, { new: true }).then(

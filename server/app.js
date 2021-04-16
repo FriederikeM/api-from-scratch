@@ -9,6 +9,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+//Students
+
 app.post("/students", (req, res) => {
   Students.create(req.body).then((newStudent) => {
     res.status(201);
@@ -45,7 +47,49 @@ app.delete("/students/:id", (req, res) => {
   const { id } = req.params;
   Students.findByIdAndDelete(id).then(() => {
     res.status(204);
-    res.json("Post deleted!");
+    res.json("Student deleted!");
+  });
+});
+
+// Courses
+
+app.post("/course", (req, res) => {
+  Course.create(req.body).then((newCourse) => {
+    res.status(201);
+    res.json(newCourse);
+  });
+});
+
+app.get("/course", (req, res) => {
+  Course.find().then((course) => {
+    res.status(200);
+    res.json(course);
+  });
+});
+
+app.get("/course/:id", (req, res) => {
+  const { id } = req.params;
+  Course.findById(id).then((course) => {
+    res.status(200);
+    res.json(course);
+  });
+});
+
+app.patch("/course/:id", (req, res) => {
+  const { id } = req.params;
+  Course.findByIdAndUpdate(id, req.body, { new: true }).then(
+    (updatedCourse) => {
+      res.status(200);
+      res.json(updatedCourse);
+    }
+  );
+});
+
+app.delete("/course/:id", (req, res) => {
+  const { id } = req.params;
+  Course.findByIdAndDelete(id).then(() => {
+    res.status(204);
+    res.json("Course deleted!");
   });
 });
 
